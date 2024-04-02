@@ -101,56 +101,56 @@ const App = () => {
 
   //   // return ()=>setTranslated('')
   // }, [translated]);
-  const handleNMTReuqest = async () => {
-    const NMTRequestBody = {
-      pipelineTasks: [
-        {
-          taskType: "translation",
-          config: {
-            language: {
-              sourceLanguage: "hi",
-              targetLanguage: `${target_language}`,
-            },
-            serviceId: `${NMT_service_id}`,
-          },
-        },
-      ],
-      inputData: {
-        input: [
-          {
-            source: `${transcript}`,
-          },
-        ],
-      },
-    };
-    const NMTHeaders = {
-      "Content-Type": "application/json",
-      Authorization: authKey,
-    };
-    const NMTresponse = await fetch(callback_url, {
-      method: "POST",
-      headers: NMTHeaders,
-      body: JSON.stringify(NMTRequestBody),
-    });
+  // const handleNMTReuqest = async () => {
+  //   const NMTRequestBody = {
+  //     pipelineTasks: [
+  //       {
+  //         taskType: "translation",
+  //         config: {
+  //           language: {
+  //             sourceLanguage: "hi",
+  //             targetLanguage: `${target_language}`,
+  //           },
+  //           serviceId: `${NMT_service_id}`,
+  //         },
+  //       },
+  //     ],
+  //     inputData: {
+  //       input: [
+  //         {
+  //           source: `${transcript}`,
+  //         },
+  //       ],
+  //     },
+  //   };
+  //   const NMTHeaders = {
+  //     "Content-Type": "application/json",
+  //     Authorization: authKey,
+  //   };
+  //   const NMTresponse = await fetch(callback_url, {
+  //     method: "POST",
+  //     headers: NMTHeaders,
+  //     body: JSON.stringify(NMTRequestBody),
+  //   });
 
-    // Handle the API response
-    const data = await NMTresponse.json().catch((err) => {
-      console.error("Error parsing JSON:", err);
-      return null; // Return null or handle the error appropriately
-    });
+  //   // Handle the API response
+  //   const data = await NMTresponse.json().catch((err) => {
+  //     console.error("Error parsing JSON:", err);
+  //     return null; // Return null or handle the error appropriately
+  //   });
 
-    if (data) {
-      const translatedString = data.pipelineResponse[0].output[0].target;
-      console.log(translatedString);
-      setTranslated(translatedString);
-    }
+  //   if (data) {
+  //     const translatedString = data.pipelineResponse[0].output[0].target;
+  //     console.log(translatedString);
+  //     setTranslated(translatedString);
+  //   }
 
-    // // Handle the API response
-    // const data = await ASRresponse.json();
-    // const recongnizedString = data.pipelineResponse[0].output[0].source;
-    // setTranscript((prev) => (prev = recongnizedString));
-    // // console.log(recongnizedString);
-  };
+  //   // // Handle the API response
+  //   // const data = await ASRresponse.json();
+  //   // const recongnizedString = data.pipelineResponse[0].output[0].source;
+  //   // setTranscript((prev) => (prev = recongnizedString));
+  //   // // console.log(recongnizedString);
+  // };
 
   const handleApiReuqest = async () => {
     const response = await fetch(
@@ -205,7 +205,7 @@ const App = () => {
     };
 
     // Make the API request using the requestBody
-    const ASRresponse = await fetch(callback_url, {
+    const ASRresponse = await fetch(callback, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -248,7 +248,7 @@ const App = () => {
     Authorization: compute_call_authorization_value,
   }
   const NMTresponse = await fetch(
-    callback_url,
+    callback,
     {
       method: "POST",
       headers:NMTHeaders,
@@ -293,7 +293,7 @@ const App = () => {
     Authorization: compute_call_authorization_value,
   }
   const reverseNMTresponse = await fetch(
-    callback_url,
+    callback,
     {
       method: "POST",
       headers:reverseNMTHeaders,
@@ -334,7 +334,7 @@ const TTSHeaders = {
   Authorization: compute_call_authorization_value,
 }
 const TTSResponse = await fetch(
-  callback_url,
+  callback,
   {
     method: "POST",
     headers: TTSHeaders,
